@@ -1,4 +1,4 @@
-# mgu-airplay
+# mgu-hamadstools
 
 Two apps for the BMW iDrive 7 head unit (MGU), installed from the
 [Store](https://github.com/robertnisipeanu/mgu-store):
@@ -13,7 +13,7 @@ By **h4m4d**. iDrive 7 only.
 
 ## Install
 
-1. In the car: **Store → Settings → Add source**, enter `noth4m4d/mgu-airplay`,
+1. In the car: **Store → Settings → Add source**, enter `noth4m4d/mgu-hamadstools`,
    choose **Releases**.
 2. Install **AirPlay** and/or **Waze Cards**. Each brings its background
    service (AirPlay receiver, Waze Cards service) with it.

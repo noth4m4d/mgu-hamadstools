@@ -3,7 +3,7 @@
  * release.js - publish dist/ as a Store source: the GitHub release "catalog" with every package
  * and a catalog.json (mgu-store docs/PUBLISHING.md, "Catalog"). Needs gh, logged in.
  *
- *   node tools/release.js [owner/repo]        (default noth4m4d/mgu-airplay)
+ *   node tools/release.js [owner/repo]        (default noth4m4d/mgu-hamadstools)
  *
  * In the car: Store > Settings > Add source > owner/repo > Releases.
  */
@@ -13,7 +13,7 @@ const crypto = require('crypto');
 const { execFileSync } = require('child_process');
 const tar = require('./tarlite');
 
-const REPO = process.argv[2] || 'noth4m4d/mgu-airplay';
+const REPO = process.argv[2] || 'noth4m4d/mgu-hamadstools';
 const TAG = 'catalog';
 const ROOT = path.join(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
