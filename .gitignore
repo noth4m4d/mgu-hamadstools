@@ -1,0 +1,4 @@
+dist/
+airplay/receiver/dist/
+__pycache__/
+*.rgb

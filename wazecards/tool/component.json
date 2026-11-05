@@ -1,0 +1,27 @@
+{
+  "id": "wazecard",
+  "kind": "tool",
+  "version": "1.0.0",
+  "license": "MIT",
+  "title": "Waze Cards service",
+  "description": "Shows Waze's turn and arrival cards, or Waze's map, on the instrument cluster while Waze guides on the central screen. Switched and set up in the Waze Cards app.",
+  "author": "h4m4d",
+  "requires": {
+    "mgu-deploy": "0.7.0",
+    "cluster-render": "0.3.10"
+  },
+  "uninstallable": true,
+  "mguHmi": ["ID7"],
+  "files": [
+    { "path": "wazecard.js", "from": "../service/src/wazecard.js", "mode": "0644" },
+    { "path": "card.js", "from": "../service/src/card.js", "mode": "0644" },
+    { "path": "LICENSE", "from": "../../LICENSE.MIT", "mode": "0644" }
+  ],
+  "units": [
+    { "name": "wazecard.service", "from": "wazecard.service" }
+  ],
+  "enable": [
+    { "unit": "wazecard.service", "target": "multi-user.target" }
+  ],
+  "restart": ["wazecard.service"]
+}

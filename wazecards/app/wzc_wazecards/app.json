@@ -1,0 +1,101 @@
+{
+  "id": "wzc_wazecards",
+  "title": "Waze Cards",
+  "description": "Waze's turn and arrival cards, or Waze's map with them, on the instrument cluster while Waze guides on the central screen. Settings here switch it on or off, pick what the cluster shows and the card sizes.",
+  "version": "1.0.1",
+  "vendor": "h4m4d",
+  "loggingId": "OAWZ",
+  "iconGlyph": "flag",
+  "signals": {},
+  "screens": [
+    {
+      "name": "MAIN",
+      "kind": "menu",
+      "title": "Waze Cards",
+      "settings": true,
+      "items": [
+        [
+          "text",
+          "MENU_INFO",
+          ""
+        ]
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "key": "enabled",
+      "label": "Show Waze on the cluster",
+      "type": "bool",
+      "default": true
+    },
+    {
+      "key": "mode",
+      "label": "On the cluster",
+      "type": "choice",
+      "default": "cards",
+      "options": [
+        [
+          "cards",
+          "Cards over the cluster"
+        ],
+        [
+          "map",
+          "Waze map in the map area"
+        ]
+      ]
+    },
+    {
+      "key": "turnSize",
+      "label": "Turn card size",
+      "type": "choice",
+      "default": "medium",
+      "options": [
+        [
+          "small",
+          "Small"
+        ],
+        [
+          "medium",
+          "Medium"
+        ],
+        [
+          "large",
+          "Large"
+        ]
+      ]
+    },
+    {
+      "key": "etaSize",
+      "label": "Arrival card size",
+      "type": "choice",
+      "default": "medium",
+      "options": [
+        [
+          "small",
+          "Small"
+        ],
+        [
+          "medium",
+          "Medium"
+        ],
+        [
+          "large",
+          "Large"
+        ]
+      ]
+    },
+    {
+      "key": "arrival",
+      "label": "Show the arrival card",
+      "type": "bool",
+      "default": true
+    }
+  ],
+  "credits": [
+    [
+      "Waze Cards by h4m4d",
+      "Author h4m4d"
+    ]
+  ]
+}

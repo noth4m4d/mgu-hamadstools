@@ -1,0 +1,17 @@
+[Unit]
+Description=wazecard: Waze's turn and arrival cards, or Waze's map, on the instrument cluster
+RequiresMountsFor=/var/opt
+Wants=cluster-render.socket
+After=local-fs.target cluster-render.socket
+
+[Service]
+# root: winston-grabber reads the screen through the compositor's own socket
+ExecStart=/usr/bin/node /var/opt/wazecard/current/wazecard.js
+Restart=on-failure
+RestartSec=10
+# never in the way of the HMI: lower priority, at most half of one core
+Nice=10
+CPUQuota=50%
+
+[Install]
+WantedBy=multi-user.target

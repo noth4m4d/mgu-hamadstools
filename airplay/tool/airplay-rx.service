@@ -1,0 +1,20 @@
+[Unit]
+Description=airplay-rx: AirPlay screen mirroring from an iPhone to the central display (on while the AirPlay app is open)
+RequiresMountsFor=/var/opt
+After=local-fs.target network.target
+
+[Service]
+# root: it opens and closes its firewall ports (nft) and talks to the head unit's mdnsd.
+# -s  software decoding (the i965 VA-API driver decodes but cannot hand frames back)
+# -A  video only: the iPhone keeps its sound on Bluetooth to the car
+# -n auto  the car's Bluetooth name ("BMW 12345")
+# (systemd 237 on the MGU: no StandardOutput=append:, so the shell appends to the log)
+ExecStart=/bin/sh -c 'exec /var/opt/airplay-rx/current/airplay-rx -s -A -a apm_airplay -n auto -k /var/opt/airplay-rx/airplay.pem -o /dev/shm/mgu-video-airplay >> /var/opt/airplay-rx/airplay.log 2>&1'
+Restart=on-failure
+RestartSec=10
+# never in the way of the HMI
+Nice=10
+CPUQuota=100%
+
+[Install]
+WantedBy=multi-user.target

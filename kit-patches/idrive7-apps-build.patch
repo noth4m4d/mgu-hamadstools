@@ -1,0 +1,61 @@
+diff --git a/kit/tools/build.py b/kit/tools/build.py
+index 72e6ec7..1d190cd 100644
+--- a/kit/tools/build.py
++++ b/kit/tools/build.py
+@@ -218,6 +218,15 @@ def build_ui(spec, language='en'):
+                 'Text1stRow': {'value': credit_title, 'type': 'StringId'},
+                 'Text2ndRow': {'value': credit_link, 'type': 'StringId'},
+             }]))
++        # the app's own credits ("credits": [[title, second row], ...] in app.json), above the project's
++        for i, cr in enumerate(spec.get('credits', [])):
++            name = 'APP_CREDITS_%d' % i
++            c_title, c_line = sid(app, name + '_TITLE'), sid(app, name + '_LINK')
++            strings[c_title], strings[c_line] = cr[0], cr[1] if len(cr) > 1 else ''
++            items.append(comp('tworow', name, rows=[{
++                'Text1stRow': {'value': c_title, 'type': 'StringId'},
++                'Text2ndRow': {'value': c_line, 'type': 'StringId'},
++            }]))
+         # the project's own credit, last row
+         repo_title, repo_link = sid(app, 'REPO_CREDITS_TITLE'), sid(app, 'REPO_CREDITS_LINK')
+         strings[repo_title] = 'iDrive 7 custom apps'
+@@ -485,7 +494,15 @@ def build(app_id, language='en'):
+                 'icon': icon, 'insertionStateId': 20974, 'insertionFocusId': 2, 'insertionMode': 'INSERT_BELOW',
+                 'insertionOrder': 0, 'insertionPriority': 0, 'previewType': 'NONE', 'bookmarkable': True,
+                 'private': False, 'appearance': 'DEFAULT', 'isGroupHeader': False, 'insertionGroup': 0,
+-            }],
++            }] + [{
++                # more tiles in other HMI menus ("entryPoints": [{"state": 20003, "focus": 23420}] in
++                # app.json: the menu's state id and the item to go below), the app's main screen too
++                'name': app_id.upper() + '_ENTRY_%d' % (i + 1), 'uuid': u(app_id, 'entry-%d' % (i + 1)), 'textId': sid(app_id, 'TITLE'),
++                'icon': icon, 'insertionStateId': ep['state'], 'insertionFocusId': ep.get('focus', 2),
++                'insertionMode': ep.get('mode', 'INSERT_BELOW'),
++                'insertionOrder': 0, 'insertionPriority': 0, 'previewType': 'NONE', 'bookmarkable': True,
++                'private': False, 'appearance': 'DEFAULT', 'isGroupHeader': False, 'insertionGroup': 0,
++            } for i, ep in enumerate(spec.get('entryPoints', []))],
+         },
+     }
+     pr = os.path.join(src, 'rhmiData')
+diff --git a/kit/tools/make_icon.js b/kit/tools/make_icon.js
+index 2542387..69dd715 100644
+--- a/kit/tools/make_icon.js
++++ b/kit/tools/make_icon.js
+@@ -106,6 +106,19 @@ if (glyph === 'gauge') {
+     c.convex([[96, 56], [74, 64], [78, 78], [94, 74]], A);
+     c.convex([[70, 82], [64, 94], [76, 94]], '#000000');     // nose
+     for (let i = 0; i < 4; i++) c.fillRect(52 + i * 11, 104, 3, 16, '#000000');   // teeth
++} else if (glyph === 'airplay') {
++    // screen mirroring: a screen outline open at the bottom, a triangle rising into the gap
++    const lw = 7, r = 10, x0 = 18, x1 = 122, y0 = 24, y1 = 96;
++    c.line(x0 + r, y0, x1 - r, y0, lw, W);                   // top
++    c.line(x0, y0 + r, x0, y1 - r, lw, W);                   // sides
++    c.line(x1, y0 + r, x1, y1 - r, lw, W);
++    c.arc(x0 + r, y0 + r, r - lw / 2, r + lw / 2, -90, 0, W); // corners
++    c.arc(x1 - r, y0 + r, r - lw / 2, r + lw / 2, 0, 90, W);
++    c.arc(x1 - r, y1 - r, r - lw / 2, r + lw / 2, 90, 180, W);
++    c.arc(x0 + r, y1 - r, r - lw / 2, r + lw / 2, 180, 270, W);
++    c.line(x0 + r, y1, 48, y1, lw, W);                       // bottom, open in the middle
++    c.line(92, y1, x1 - r, y1, lw, W);
++    c.convex([[70, 76], [100, 124], [40, 124]], B);          // the triangle
+ } else {
+     c.strokeRoundRect(14, 14, 112, 112, 22, 6, W);
+     c.text(glyph, 70, 88, 56, W, { font: 'bold', align: 'center' });

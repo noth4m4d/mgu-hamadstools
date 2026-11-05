@@ -1,0 +1,26 @@
+{
+  "id": "airplay-rx",
+  "kind": "tool",
+  "version": "1.0.0",
+  "license": "GPL-3.0-or-later",
+  "title": "AirPlay receiver",
+  "description": "AirPlay screen mirroring from an iPhone to the central display. Runs in the background and advertises the car only while the AirPlay app is open; the picture is shown by the AirPlay app, the sound stays on Bluetooth.",
+  "author": "h4m4d",
+  "requires": {
+    "mgu-deploy": "0.7.0"
+  },
+  "uninstallable": true,
+  "mguHmi": ["ID7"],
+  "files": [
+    { "path": "airplay-rx", "from": "../receiver/dist/airplay-rx", "mode": "0755" },
+    { "path": "LICENSE", "from": "../../LICENSE", "mode": "0644" },
+    { "path": "NOTICE.md", "from": "../../NOTICE.md", "mode": "0644" }
+  ],
+  "units": [
+    { "name": "airplay-rx.service", "from": "airplay-rx.service" }
+  ],
+  "enable": [
+    { "unit": "airplay-rx.service", "target": "multi-user.target" }
+  ],
+  "restart": ["airplay-rx.service"]
+}

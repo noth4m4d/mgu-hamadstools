@@ -1,0 +1,41 @@
+{
+  "id": "apm_airplay",
+  "title": "AirPlay",
+  "description": "Your iPhone's screen on the central display, by AirPlay screen mirroring, while parked. Open the app, disconnect CarPlay, join the car's Wi-Fi, then on the iPhone: Control Centre, Screen Mirroring, the car's Bluetooth name (BMW 12345).",
+  "version": "1.0.6",
+  "vendor": "h4m4d",
+  "entryPoints": [{ "state": 20003, "focus": 23420 }],
+  "loggingId": "OAAP",
+  "iconGlyph": "airplay",
+  "signals": {
+    "de.bmw.infotainment.vehicle.Vehicle2": {
+      "statusCarSpeed2": "rs"
+    }
+  },
+  "screens": [
+    {
+      "name": "MAIN",
+      "kind": "menu",
+      "title": "AirPlay",
+      "settings": true,
+      "items": [
+        ["button", "BTN_SHOW", "Show the phone's screen"],
+        ["text", "MENU_INFO", ""],
+        ["text", "STEP_1", "1. On the iPhone, disconnect CarPlay"],
+        ["text", "STEP_2", "2. Join the car's Wi-Fi"],
+        ["text", "STEP_3", "3. Control Centre > Screen Mirroring > the car's Bluetooth name"],
+        ["text", "STEP_4", "4. Sound: Control Centre > music > AirPlay icon > BMW (Bluetooth)"]
+      ]
+    },
+    {
+      "name": "SCREEN",
+      "kind": "canvas",
+      "title": "AirPlay"
+    }
+  ],
+  "credits": [["AirPlay by h4m4d", "Author h4m4d · AirPlay protocol from UxPlay (GPL-3.0)"]],
+  "settings": [
+    { "key": "parkedOnly", "label": "Parked only (hides the picture while driving)", "type": "bool", "default": true },
+    { "key": "autoShow", "label": "Show the phone's screen when it connects", "type": "bool", "default": true }
+  ]
+}
